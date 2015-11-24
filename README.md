@@ -26,6 +26,7 @@ Once you've got Pact installed and working, copy this rake task into your Rakefi
 
 ```ruby
 namespace :pact do
+  desc "Upload pact contracts to S3"
   task :upload do
     require_relative 'spec/service_providers/pact_helper'
     require 'pact/retreaty'

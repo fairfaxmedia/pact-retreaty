@@ -28,7 +28,9 @@ module Pact
         verify_config!(:download)
 
         catch(:uri_found) do
-          realised_vcs_fallbacks.each { |vcs_id| uri_for_pactfile_and_vcs_id(vcs_id) }
+          realised_vcs_fallbacks.each do |vcs_id|
+            uri_for_pactfile_and_vcs_id(vcs_id)
+          end
           fail("Retreaty couldn't find a suitable contract for version #{version} of #{name}, under #{realised_vcs_fallbacks.join(' or ')}")
         end
       end
@@ -74,7 +76,7 @@ module Pact
       end
 
       def realised_vcs_fallbacks
-        vcs_fallbacks.map {|id| id == :vcs_id ? current_vcs_id : id }
+        vcs_fallbacks.call.map {|id| id == :vcs_id ? current_vcs_id : id }
       end
 
       # TODO - handle cases where git isn't present - configure with a proc?
